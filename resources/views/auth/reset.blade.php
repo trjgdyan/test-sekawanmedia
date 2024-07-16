@@ -31,60 +31,61 @@
                                 class="shadow-light rounded-circle">
                         </div>
 
+
                         <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>Login</h4>
-                            </div>
+                            <div class="card-header"><h4>Reset Password</h4></div>
 
                             <div class="card-body">
-                                <form method="post" action="{{ route('login') }}">
+                                <p class="text-muted">We will send a link to reset your password</p>
+                                <form method="POST" action="{{ route('password.update') }}">
                                     @csrf
+                                    <input type="text" name="token" id="token" value="{{ $request->token }}" hidden>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input id="email" type="email"
-                                            class="form-control @error('email') is-invalid @enderror"
-                                            value="{{ old('email') }}" placeholder="Email"
-                                            @error('email') value="{{ old('email') }}" @enderror name="email"
-                                            tabindex="1">
+                                        <input id="email" type="email" class="form-control
                                         @error('email')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                        is-invalid
+                                        @enderror" value="{{ $request->email }}" name="email" tabindex="1" required readonly>
+                                        @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
                                         @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <div class="d-block">
-                                            <label for="password" class="control-label">Password</label>
-                                            <div class="float-right">
-                                                <a href="{{route('password.request')}}" class="text-small">
-                                                    Forgot Password?
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <input id="password" type="password"
-                                            class="form-control @error('password') is-invalid
-                                        @enderror"
-                                            name="password" tabindex="2" placeholder="Password">
+                                        <label for="password">New Password</label>
+                                        <input id="password" type="password" class="form-control
                                         @error('password')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                        is-invalid
+                                        @enderror" name="password" tabindex="2" required>
+                                        @error('password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
                                         @enderror
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="password_confirmation">Confirm Password</label>
+                                        <input id="password_confirmation" type="password" class="form-control
+                                        @error('password_confirmation')
+                                        is-invalid
+                                        @enderror" name="password_confirmation" tabindex="2" required>
+                                        @error('password_confirmation')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                            Login
+                                            Reset Password
                                         </button>
                                     </div>
                                 </form>
-
                             </div>
-                        </div>
-                        <div class="mt-5 text-muted text-center">
-                            Don't have an account? <a href="{{route('register')}}">Create One</a>
                         </div>
                         <div class="simple-footer">
                             Copyright &copy; Stisla 2018
