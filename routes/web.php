@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VehicleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,21 +22,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/index-angkutan', function () {
-    return view('angkutan.index');
-});
-
-Route::get('/create-angkutan', function () {
-    return view('angkutan.create');
-});
-
-Route::get('/edit-angkutan', function () {
-    return view('angkutan.edit');
-});
-
-Route::get('/show-angkutan', function () {
-    return view('angkutan.show');
-});
+//routes for vehicle
+Route::resource('vehicles', VehicleController::class);
 
 Route::get('/index-reservasi', function () {
     return view('reservasi.index');

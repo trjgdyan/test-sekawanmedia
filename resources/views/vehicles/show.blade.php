@@ -19,29 +19,38 @@
                 <tbody>
                     <tr>
                         <td>Nama Kendaraan</td>
-                        <td class="text-center">Truk</td>
+                        <td class="text-center">{{ $vehicle->name }}</td>
                     </tr>
                     <tr>
-                        <td>Nopol</td>
-                        <td class="text-center">21X8ISZ</td>
+                        <td>Plat</td>
+                        <td class="text-center">{{ $vehicle->license_plate }}</td>
                     </tr>
                     <tr>
-                        <td>Jenis Angkutan</td>
-                        <td class="text-center">Angkutan Barang</td>
+                        <td>Jenis Kendaraan</td>
+                        <td class="text-center">{{ $vehicle->vehicle_type }}</td>
                     </tr>
+
                     <tr>
-                        <td>Status</td>
-                        <td class="text-center">
-                            <span class="badge badge-success">Dipinjam</span>
+                        <td>Status Kepemilikan</td>
+                        <td class="text-center">{{ $vehicle->is_company_owned }}</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Jadwal Service</td>
+                        <td class="text-center">{{ $vehicle->service_schedule }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Lokasi</td>
+                        <td class="text-center">{{ $vehicle->location }}</td>
+                    </tr>
+
+                    {{-- button back --}}
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            <a href="{{ route('vehicles.index') }}" class="btn btn-primary">Kembali</a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Pinjam</td>
-                        <td class="text-center">2021-08-31 09:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Kembali</td>
-                        <td class="text-center">2021-08-31 09:00:00</td>
                     </tr>
                 </tbody>
             </table>
