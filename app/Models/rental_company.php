@@ -9,4 +9,9 @@ class rental_company extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'id_vehicle');
+    }
 }

@@ -60,7 +60,7 @@
                             class="form-control select2 select2-hidden-accessible @error('vehicle') is-invalid @enderror"
                             name="vehicle" id="vehicle" tabindex="-1" aria-hidden="true">
                             @foreach ($vehicles as $vehicle)
-                                <option value="{{ $vehicle->name }}" @if (old('vehicle') == $vehicle->name) selected @endif>
+                                <option value="{{ $vehicle->id }}" @if (old('vehicle') == $vehicle->id) selected @endif>
                                     {{ $vehicle->name }}</option>
                             @endforeach
                         </select>
@@ -74,7 +74,7 @@
                         <select class="form-control select2 select2-hidden-accessible @error('driver') is-invalid @enderror"
                             name="driver" id="driver" tabindex="-1" aria-hidden="true">
                             @foreach ($drivers as $driver)
-                                <option value="{{ $driver->name }}" @if (old('driver') == $driver->name) selected @endif>
+                                <option value="{{ $driver->id }}" @if (old('driver') == $driver->id) selected @endif>
                                     {{ $driver->name }}</option>
                             @endforeach
                         </select>
@@ -105,20 +105,6 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select
-                            class="form-control select2 select2-hidden-accessible @error('status') is-invalid @enderror"
-                            name="status" id="status" tabindex="-1" aria-hidden="true">
-                            <option value="dipinjam" @if (old('status') == 'dipinjam') selected @endif>dipinjam</option>
-                            <option value="tidak dipinjam" @if (old('status') == 'tidak dipinjam') selected @endif>tidak dipinjam
-                            </option>
-                        </select>
-                        @error('status')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <div class="card-footer text-right">

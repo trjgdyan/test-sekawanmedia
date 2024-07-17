@@ -10,4 +10,9 @@ class Driver extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'id_driver');
+    }
 }

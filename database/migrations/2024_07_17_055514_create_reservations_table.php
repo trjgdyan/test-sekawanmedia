@@ -19,9 +19,9 @@ return new class extends Migration
             $table->enum('type_of_tenant', ['personal', 'company']);
             $table->bigInteger('id_vehicle')->unsigned()->nullable();
             $table->bigInteger('id_driver')->unsigned()->nullable();
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->enum('status', ['dipinjam', 'tidak dipinjam'])->default('tidak dipinjam');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

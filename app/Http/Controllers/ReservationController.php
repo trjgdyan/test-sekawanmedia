@@ -15,6 +15,7 @@ class ReservationController extends Controller
     public function index()
     {
         $reservation = Reservation::all();
+        // dd($reservation);
         return view('reservations.index', compact('reservation'));
     }
 
@@ -42,7 +43,6 @@ class ReservationController extends Controller
             'driver' => ['nullable', 'string'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
-            'status' => ['required', 'in:dipinjam,tidak dipinjam'],
         ]);
 
         Reservation::create([
@@ -50,11 +50,10 @@ class ReservationController extends Controller
             'address' => $validated['address'],
             'phone_number' => $validated['phone_number'],
             'type_of_tenant' => $validated['type_of_tenant'],
-            'vehicle' => $validated['vehicle'],
-            'driver' => $validated['driver'],
+            'id_vehicle' => $validated['vehicle'],
+            'id_driver' => $validated['driver'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
-            'status' => $validated['status'],
         ]);
 
         return redirect()->route('reservations.index');
@@ -77,7 +76,10 @@ class ReservationController extends Controller
         $vehicles = Vehicle::all();
         $drivers = Driver::all();
         $reservation = Reservation::find($reservation->id);
-        return view('reservations.edit', ['reservation' => $reservation], 'vehicles', 'drivers');
+        return view(
+            'reservations.edit',
+            ['reservation' => $reservation, 'vehicles' => $vehicles, 'drivers' => $drivers]
+        );
     }
 
     /**
@@ -94,7 +96,6 @@ class ReservationController extends Controller
             'driver' => ['nullable', 'string'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
-            'status' => ['required', 'in:dipinjam,tidak dipinjam'],
         ]);
 
         Reservation::where('id', $reservation->id)->update(
@@ -103,11 +104,10 @@ class ReservationController extends Controller
                 'address' => $validated['address'],
                 'phone_number' => $validated['phone_number'],
                 'type_of_tenant' => $validated['type_of_tenant'],
-                'vehicle' => $validated['vehicle'],
-                'driver' => $validated['driver'],
+                'id_vehicle' => $validated['vehicle'],
+                'id_driver' => $validated['driver'],
                 'start_date' => $validated['start_date'],
                 'end_date' => $validated['end_date'],
-                'status' => $validated['status'],
             ]
         );
 

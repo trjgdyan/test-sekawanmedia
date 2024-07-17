@@ -35,12 +35,12 @@
 
                         <tr>
                             <td>Vehicle</td>
-                            <td class="text-center">{{ $reservation->vehicle }}</td>
+                            <td class="text-center">{{ $reservation->vehicle->name }}</td>
                         </tr>
 
                         <tr>
                             <td>Driver</td>
-                            <td class="text-center">{{ $reservation->driver }}</td>
+                            <td class="text-center">{{ $reservation->driver->name }}</td>
                         </tr>
 
                         <tr>

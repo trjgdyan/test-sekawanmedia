@@ -28,7 +28,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="font-weight-600">{{ $data->name }}</td>
                                 <td>{{ $data->phone_number }}</td>
-                                <td>{{ $data->vehicle }}</td>
+                                <td>{{ $data->vehicle->name }}</td>
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
 
