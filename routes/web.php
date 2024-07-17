@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DriverController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 
@@ -12,10 +13,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', function () {
         return view('layouts.app');
     })->name('dashboard');
-});
-
-Route::get('/register', function () {
-    return view('auth.register');
 });
 
 Route::get('/dashboard', function () {
@@ -31,4 +28,10 @@ Route::get('/index-reservasi', function () {
 
 Route::get('/create-reservasi', function () {
     return view('reservasi.create');
+});
+
+Route::resource('drivers', DriverController::class);
+
+Route::get('/edit-driver', function () {
+    return view('driver.edit');
 });
