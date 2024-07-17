@@ -4,6 +4,7 @@
 
 @section('body')
 
+<div class="card">
     <div class="card-body">
         <form action="{{ route('vehicles.store') }}" method="post">
             @csrf
@@ -44,10 +45,22 @@
                 <label for="is_company_owned">Status Kepemilikan</label>
                 <select name="is_company_owned" id="is_company_owned"
                     class="form-control select2 select2-hidden-accessible @error('is_company_owned') is-invalid @enderror">
-                    <option value="1" @if (old('is_company_owned') == '1') selected @endif>1</option>
-                    <option value="0" @if (old('is_company_owned') == '0') selected @endif>0</option>
+                    <option value="1" @if (old('is_company_owned') == '1') selected @endif>Milik Pribadi</option>
+                    <option value="0" @if (old('is_company_owned') == '0') selected @endif>Sewa Perusahaan Lain</option>
                 </select>
                 @error('is_company_owned')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="form-group" id="company_rent_group">
+                <label for="company_rent">Perusahaan sewa</label>
+                <select name="company_rent" id="company_rent"
+                    class="form-control select2 select2-hidden-accessible @error('company_rent') is-invalid @enderror">
+                    <option value="PT Jaya" @if (old('company_rent') == '1') selected @endif>PT Jaya</option>
+                    <option value="PT Sejahtera" @if (old('company_rent') == '0') selected @endif>PT Sejahtera</option>
+                </select>
+                @error('company_rent')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -77,5 +90,24 @@
 
         </form>
     </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isCompanyOwned = document.getElementById('is_company_owned');
+        const companyRentGroup = document.getElementById('company_rent_group');
+
+        function toggleCompanyRent() {
+            if (isCompanyOwned.value == '0') {
+                companyRentGroup.style.display = 'block';
+            } else {
+                companyRentGroup.style.display = 'none';
+            }
+        }
+
+        isCompanyOwned.addEventListener('change', toggleCompanyRent);
+        toggleCompanyRent(); // Initial call to set the correct state on page load
+    });
+</script>
 
 @endsection

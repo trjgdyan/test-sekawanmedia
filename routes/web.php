@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\RentalCompanyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 
@@ -35,3 +36,5 @@ Route::resource('drivers', DriverController::class);
 Route::get('/edit-driver', function () {
     return view('driver.edit');
 });
+
+Route::resource('company', RentalCompanyController::class);
