@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\RentalCompanyController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 
@@ -23,13 +24,7 @@ Route::get('/dashboard', function () {
 //routes for vehicle
 Route::resource('vehicles', VehicleController::class);
 
-Route::get('/index-reservasi', function () {
-    return view('reservasi.index');
-});
-
-Route::get('/create-reservasi', function () {
-    return view('reservasi.create');
-});
+Route::resource('reservations', ReservationController::class);
 
 Route::resource('drivers', DriverController::class);
 
