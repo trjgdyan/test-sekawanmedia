@@ -16,11 +16,11 @@ class VehicleSeeder extends Seeder
             [
 
                 'name' => 'Avanza',
-                'type' => 'car',
+                'type' => 'personnel_transport',
                 'license_plate' => 'B 1234 ABC',
-                'price' => 200000,
-                'status' => 'available'
-
+                'is_company_owned' => true,
+                'service_schedule' => '2024-07-16 14:12:36',
+                'location' => 'Jakarta',
             ];
 
         \App\Models\Vehicle::create($data);

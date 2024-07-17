@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('vehicle_type', ['personnel_transport', 'goods_transport'])->default('personnel_transport');
+            $table->enum('type', ['personnel_transport', 'goods_transport'])->default('personnel_transport');
             $table->string('license_plate');
-            $table->boolean('is_company_owned')->default(false);
+            $table->boolean('is_company_owned')->default(true);
             $table->dateTime('service_schedule')->nullable();
             $table->string('location')->nullable();
             $table->timestamps();
