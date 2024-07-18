@@ -94,7 +94,8 @@ class ReservationController extends Controller
     public function show(Reservation $reservation)
     {
         $reservation = Reservation::find($reservation->id);
-        return view('reservations.show', compact('reservation'));
+        $approve = Approve::where('id_reservation', $reservation->id)->get();
+        return view('reservations.show', compact('reservation', 'approve'));
     }
 
     /**

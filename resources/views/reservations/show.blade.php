@@ -4,6 +4,9 @@
 
 @section('body')
     <div class="card">
+        <div class="card-header">
+            <h4>Data Reservation</h4>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table border border-black table-striped-columns table-md shadow-sm">
@@ -53,10 +56,39 @@
                             <td class="text-center">{{ $reservation->end_date }}</td>
                         </tr>
 
-                        <tr>
-                            <td>Status</td>
-                            <td class="text-center">{{ $reservation->status }}</td>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="text-center">Status</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table border border-black table-striped-columns table-md shadow-sm">
+                    <thead>
+                        <tr class="table-secondary text-center">
+                            <th scope="col">Name</th>
+                            <th scope="col">Keterangan</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($approve as $data)
+                            <tr>
+                                <td class="text-center">{{ $data->user->name }}</td>
+                                <td class="text-center">
+                                    @if ($data->status == 'approve')
+                                        <div class="text-capitalize font-weight-bold btn btn-success">Approved</div>
+                                    @elseif ($data->status == 'pending')
+                                        <div class="text-capitalize font-weight-bold btn btn-warning">Pending
+                                        </div>
+                                    @endif
+                            </tr>
+                        @endforeach
 
                     </tbody>
                 </table>
