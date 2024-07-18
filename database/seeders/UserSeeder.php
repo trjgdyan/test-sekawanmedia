@@ -36,10 +36,28 @@ class UserSeeder extends Seeder
 
         //approver
         User::create([
-            'name' => 'Approver',
+            'name' => 'Head Office',
             'email' => 'headoffice@gmail.com',
             'password' => Hash::make('password'),
             'fullname' => 'Approver',
+            'role' => 'approver',
+            'email_verified_at' => now(),
+        ]);
+
+        User::create([
+            'name' => 'Head of Transport Responsibility',
+            'email' => 'headtransport@gmail.com',
+            'password' => Hash::make('password'),
+            'fullname' => 'Head of Transport Responsibility',
+            'role' => 'approver',
+            'email_verified_at' => now(),
+        ]);
+
+        User::create([
+            'name' => 'CEO',
+            'email' => 'ceo@gmail.com',
+            'password' => Hash::make('password'),
+            'fullname' => 'CEO',
             'role' => 'approver',
             'email_verified_at' => now(),
         ]);

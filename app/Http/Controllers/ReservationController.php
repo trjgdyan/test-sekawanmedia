@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Approve;
 use App\Models\Driver;
 use App\Models\Vehicle;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -26,7 +29,8 @@ class ReservationController extends Controller
     {
         $vehicles = Vehicle::all();
         $drivers = Driver::all();
-        return view('reservations.create', compact('vehicles', 'drivers'));
+        $users = User::where('role', 'approver')->get();
+        return view('reservations.create', compact('vehicles', 'drivers', 'users'));
     }
 
     /**
@@ -43,18 +47,43 @@ class ReservationController extends Controller
             'driver' => ['nullable', 'string'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
+            'approve' => ['required', 'array', 'min:2'],
+            'approve.*' => ['required', 'exists:users,id'],
         ]);
 
-        Reservation::create([
-            'name' => $validated['name'],
-            'address' => $validated['address'],
-            'phone_number' => $validated['phone_number'],
-            'type_of_tenant' => $validated['type_of_tenant'],
-            'id_vehicle' => $validated['vehicle'],
-            'id_driver' => $validated['driver'],
-            'start_date' => $validated['start_date'],
-            'end_date' => $validated['end_date'],
-        ]);
+        // Reservation::create([
+        //     'name' => $validated['name'],
+        //     'address' => $validated['address'],
+        //     'phone_number' => $validated['phone_number'],
+        //     'type_of_tenant' => $validated['type_of_tenant'],
+        //     'id_vehicle' => $validated['vehicle'],
+        //     'id_driver' => $validated['driver'],
+        //     'start_date' => $validated['start_date'],
+        //     'end_date' => $validated['end_date'],
+        // ]);
+
+        DB::transaction(function () use ($validated) {
+            $reservation = Reservation::create([
+                'name' => $validated['name'],
+                'address' => $validated['address'],
+                'phone_number' => $validated['phone_number'],
+                'type_of_tenant' => $validated['type_of_tenant'],
+                'id_vehicle' => $validated['vehicle'],
+                'id_driver' => $validated['driver'],
+                'start_date' => $validated['start_date'],
+                'end_date' => $validated['end_date'],
+            ]);
+
+            foreach ($validated['approve'] as $approver) {
+                Approve::create([
+                    'id_reservation' => $reservation->id,
+                    'id_user' => $approver,
+                    'status' => 'pending',
+                ]);
+            }
+
+        });
+
 
         return redirect()->route('reservations.index');
     }

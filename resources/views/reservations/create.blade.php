@@ -107,11 +107,74 @@
                         </div>
                     </div>
 
-                    <div class="card-footer text-right">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+                <div class="card-header">
+                    <h4>Approval Data</h4>
+                </div>
+                <div class="card-body">
+                    <div id="approve-container">
+                        @for ($i = 0; $i < max(2, count(old('approve', ['']))); $i++)
+                            <div class="form-group approve-group">
+                                <label>Approve</label>
+                                <select
+                                    class="form-control select2 select2-hidden-accessible @error('approve.' . $i) is-invalid @enderror"
+                                    name="approve[]" id="approve" tabindex="-1" aria-hidden="true">
+                                    <option value="">Select Approver</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}"
+                                            @if (old('approve.' . $i) == $user->id) selected @endif>{{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('approve.' . $i)
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <button type="button" class="btn btn-danger remove-approve">Remove</button>
+                            </div>
+                        @endfor
                     </div>
+                    <button type="button" id="add-approve" class="btn btn-secondary">Add Approve User</button>
+                </div>
+
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
     </div>
-    </div>
+
+    <script>
+        document.getElementById('add-approve').addEventListener('click', function() {
+            const approveContainer = document.getElementById('approve-container');
+            const newApproveDiv = document.createElement('div');
+            newApproveDiv.classList.add('form-group', 'approve-group');
+            newApproveDiv.innerHTML = `
+                <label>Approve</label>
+                <select class="form-control select2 select2-hidden-accessible" name="approve[]" tabindex="-1" aria-hidden="true">
+                    <option value="">Select Approver</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                <button type="button" class="btn btn-danger remove-approve">Remove</button>
+            `;
+            approveContainer.appendChild(newApproveDiv);
+
+            newApproveDiv.querySelector('.remove-approve').addEventListener('click', function() {
+                approveContainer.removeChild(newApproveDiv);
+            });
+        });
+
+        document.querySelectorAll('.remove-approve').forEach(button => {
+            button.addEventListener('click', function() {
+                const approveContainer = document.getElementById('approve-container');
+                if (approveContainer.children.length > 2) {
+                    approveContainer.removeChild(button.parentElement);
+                } else {
+                    alert('You must have at least two approvers.');
+                }
+            });
+        });
+    </script>
 @endsection

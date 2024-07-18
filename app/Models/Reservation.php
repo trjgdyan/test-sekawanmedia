@@ -22,4 +22,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Vehicle::class, 'id_vehicle');
     }
+
+    public function approve()
+    {
+        return $this->hasMany(Approve::class, 'id_reservation');
+    }
 }
