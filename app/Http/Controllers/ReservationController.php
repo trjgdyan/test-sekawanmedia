@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReservationsExport;
 use App\Models\Approve;
 use App\Models\Driver;
 use App\Models\Vehicle;
@@ -15,12 +16,23 @@ class ReservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $reservation = Reservation::all();
-        // dd($reservation);
+        $query = Reservation::query();
+
+        if ($request->filled('start_date')) {
+            $query->where('start_date', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->where('end_date', '<=', $request->end_date);
+        }
+
+        $reservation = $query->get();
+
         return view('reservations.index', compact('reservation'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -81,7 +93,6 @@ class ReservationController extends Controller
                     'status' => 'pending',
                 ]);
             }
-
         });
 
 
@@ -152,5 +163,23 @@ class ReservationController extends Controller
         Reservation::destroy($reservation->id);
 
         return redirect()->route('reservations.index');
+    }
+
+    public function toExcel(Request $request)
+    {
+        $query = Reservation::query();
+
+        if ($request->filled('start_date')) {
+            $query->where('start_date', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->where('end_date', '<=', $request->end_date);
+        }
+
+        $reservations = $query->get();
+
+        $export = new ReservationsExport($reservations);
+        return $export->export();
     }
 }
