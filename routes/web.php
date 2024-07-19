@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApproveController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\RentalCompanyController;
 use App\Http\Controllers\ReservationController;
@@ -14,9 +15,7 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('vehicles', VehicleController::class);
     Route::resource('reservations', ReservationController::class);

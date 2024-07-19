@@ -4,6 +4,7 @@
 
 @section('body')
     <div class="mt-5">
+        <div class="container">
         <div class="row">
             <div class="col-md-4 bg-white">
                 <h3>Area Chart</h3>
@@ -26,8 +27,8 @@
                                 </svg>
                             </div>
                             <div class="ml-3 text-dark">
-                                <h3 class="h5">Total Peminjaman</h3>
-                                <p class="h6">25</p>
+                                <h3 class="h5">Total Reservations</h3>
+                                <p class="h6">{{ $countReservation }}</p>
                             </div>
                         </div>
 
@@ -48,96 +49,111 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-
-
-
 
     <!-- Custom JS for Charts -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const areaChart = document.getElementById("area-chart");
-            const donutChart = document.getElementById("donut-chart");
+            const countVehicleReservation = @json($countVehicleReservation);
 
-            // Area Chart Configuration
-            const areaChartConfig = {
-                type: 'line',
-                data: {
-                    labels: ["January", "February", "March", "April", "May", "June"],
-                    datasets: [{
-                        label: "User Growth",
-                        data: [10, 20, 30, 40, 50, 60],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+            // Debugging: Log the data to ensure it is being passed correctly
+            console.log(countVehicleReservation);
+
+            // Ensure data integrity
+            if (Array.isArray(countVehicleReservation)) {
+                const labels = countVehicleReservation.map(item => item.name);
+                const data = countVehicleReservation.map(item => item.count);
+
+                const areaChart = document.getElementById("area-chart");
+                const donutChart = document.getElementById("donut-chart");
+
+                // Area Chart Configuration
+                const areaChartConfig = {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Vehicle Reservations",
+                            data: data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            };
-            new Chart(areaChart, areaChartConfig);
+                };
 
-            // Donut Chart Configuration
-            const donutChartConfig = {
-                type: 'doughnut',
-                data: {
-                    labels: ["Angkutan Barang", "Angkutan Orang"],
-                    datasets: [{
-                        data: [300, 50, ],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            // 'rgba(255, 206, 86, 0.2)',
-                            // 'rgba(75, 192, 192, 0.2)',
-                            // 'rgba(153, 102, 255, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            // 'rgba(255, 206, 86, 1)',
-                            // 'rgba(75, 192, 192, 1)',
-                            // 'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            };
-            new Chart(donutChart, donutChartConfig);
+                new Chart(areaChart, areaChartConfig);
 
-            // Filter Checkboxes Logic
-            const filters = document.querySelectorAll('#filters input[type="checkbox"]');
-            filters.forEach(filter => {
-                filter.addEventListener('change', function() {
-                    const checkedFilters = Array.from(filters)
-                        .filter(checkbox => checkbox.checked)
-                        .map(checkbox => checkbox.value);
+                // Donut Chart Configuration
+                const donutChartConfig = {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                };
 
-                    // Update the donut chart data based on checked filters
-                    donutChartConfig.data.labels = checkedFilters;
-                    donutChartConfig.data.datasets[0].data = checkedFilters.map(filter => {
-                        switch (filter) {
-                            case "Angkutan Barang":
-                                return 300;
-                            case "Angkutan Orang":
-                                return 50;
-                            default:
-                                return 0;
-                        }
+                new Chart(donutChart, donutChartConfig);
+
+                // Filter Checkboxes Logic
+                const filters = document.querySelectorAll('#filters input[type="checkbox"]');
+                filters.forEach(filter => {
+                    filter.addEventListener('change', function() {
+                        const checkedFilters = Array.from(filters)
+                            .filter(checkbox => checkbox.checked)
+                            .map(checkbox => checkbox.value);
+
+                        // Update the donut chart data based on checked filters
+                        donutChartConfig.data.labels = checkedFilters;
+                        donutChartConfig.data.datasets[0].data = checkedFilters.map(filter => {
+                            switch (filter) {
+                                case "Goods Transportation":
+                                    return 300;
+                                case "Personal Transportation":
+                                    return 50;
+                                default:
+                                    return 0;
+                            }
+                        });
+
+                        // Re-render the chart with the new data
+                        new Chart(donutChart, donutChartConfig);
                     });
-
-                    // Re-render the chart with the new data
-                    new Chart(donutChart, donutChartConfig);
                 });
-            });
+            } else {
+                console.error("Invalid data structure for countVehicleReservation");
+            }
         });
     </script>
 @endsection
