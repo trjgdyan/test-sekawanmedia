@@ -7,11 +7,11 @@
         <div class="container">
         <div class="row">
             <div class="col-md-4 bg-white">
-                <h3>Area Chart</h3>
+                <h3>Reservation Chart</h3>
                 <canvas id="area-chart"></canvas>
             </div>
             <div class="col-md-4 bg-white">
-                <h3>Donut Chart</h3>
+                <h3>Vehicle Chart</h3>
                 <canvas id="donut-chart"></canvas>
                 <div id="filters" class="mt-4">
                 </div>
