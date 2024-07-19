@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', function () {
-        return view('layouts.app');
+        return view('dashboard');
     })->name('dashboard');
 });
 
