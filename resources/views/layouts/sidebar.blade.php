@@ -6,18 +6,28 @@
 </div>
 <ul class="sidebar-menu">
     <li class="menu-header">Dashboard</li>
-    <li class="nav-item dropdown">
-        <a href="#" class="nav-link has-dropdown"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
-        <ul class="dropdown-menu">
-            <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-            <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-        </ul>
+    <li>
+        <a href="{{ route('dashboard') }}" class="nav-link"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
     </li>
-    <li><a class="nav-link" href="credits.html"><i class="fas fa-pencil-ruler"></i> <span>Credits</span></a></li>
+    @if (auth()->user()->role != 'admin')
+        <li><a class="nav-link" href="{{ route('approve.index') }}"><i
+                    class="fa-duotone fa-solid fa-truck-ramp-box"></i>Approver</a></li>
+    @endif
 </ul>
-
-<div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-    <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
-        <i class="fas fa-rocket"></i> Documentation
-    </a>
-</div>
+@if (auth()->user()->role == 'admin')
+    <ul class="sidebar-menu">
+        <li class="menu-header">Reservation</li>
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link has-dropdown"><i
+                    class="fa-duotone fa-solid fa-truck-ramp-box"></i><span>Vehicle Rent</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ route('reservations.index') }}">Reservation</a></li>
+            </ul>
+        </li>
+        <li><a class="nav-link" href="{{ route('vehicles.index') }}"><i
+                    class="fa-duotone fa-solid fa-car"></i><span>Vehicle</span></a></li>
+        <li><a class="nav-link" href="{{ route('drivers.index') }}"><i
+                    class="fa-duotone fa-solid fa-id-card"></i><span>Driver</span></a>
+        </li>
+    </ul>
+@endif

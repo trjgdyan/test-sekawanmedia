@@ -16,8 +16,7 @@
                     <tbody>
                         <tr class="text-center">
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Jenis Angkutan</th>
+                            <th>Name</th>
                             <th>Status Kepemilikan</th>
                             <th>Jadwal Service</th>
                             <th>Action</th>
@@ -26,7 +25,6 @@
                             <tr class="text-center">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->vehicle_type }}</td>
                                 <td>
                                     @if ($item->ownership_status == true)
                                         <span class="badge badge-success">Milik Sendiri</span>

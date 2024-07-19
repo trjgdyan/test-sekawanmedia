@@ -5,15 +5,15 @@
 @section('body')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('drivers.store') }}" method="post">
+            <form action="{{ route('drivers.update', $driver[0]->id) }}" method="post">
                 @csrf
                 @method('put')
                 @foreach ($driver as $data)
                     <div class="form-group">
                         <label>Nama Driver</label>
-                        <input type="text" class="form-control @error('nama') is-invalid
+                        <input type="text" class="form-control @error('name') is-invalid
                     @enderror"
-                            name="nama" value="{{ $data->name }}">
+                            name="name" value="{{ $data->name }}">
                         @error('nama')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -60,7 +60,7 @@
                     @enderror
 
                     <div class="card-footer text-right">
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary" type="submit">Submit</button>
                         <a href="{{ route('drivers.index') }}" class="btn btn-secondary">Back</a>
                     </div>
                 @endforeach

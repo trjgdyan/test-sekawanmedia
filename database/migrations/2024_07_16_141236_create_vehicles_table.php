@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('type', ['personnel_transport', 'goods_transport'])->default('personnel_transport');
             $table->string('license_plate');
             $table->boolean('is_company_owned')->default(true);
-            $table->dateTime('service_schedule')->nullable();
+            $table->date('service_schedule')->nullable();
             $table->string('location')->nullable();
             $table->timestamps();
         });

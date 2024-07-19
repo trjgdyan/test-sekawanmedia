@@ -28,7 +28,11 @@
                         </tr>
                         <tr>
                             <td>Jenis Kendaraan</td>
-                            <td class="text-center">{{ $vehicle->vehicle_type }}</td>
+                            @if ($vehicle->type == 'personnel_transport')
+                                <td class="text-center">Personal Vehicle</td>
+                            @elseif ($vehicle->type == 'goods_transport')
+                                <td class="text-center">Goods Transportation</td>
+                            @endif
                         </tr>
 
                         <tr>

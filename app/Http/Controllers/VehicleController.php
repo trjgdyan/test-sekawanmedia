@@ -48,10 +48,10 @@ class VehicleController extends Controller
 
         // dd($validated);
 
-        $vehicle = Vehicle::create(
+        Vehicle::create(
             [
                 'name' => $validated['name'],
-                'vehicle_type' => $validated['vehicle_type'],
+                'type' => $validated['vehicle_type'],
                 'license_plate' => $validated['license_plate'],
                 'is_company_owned' => $validated['is_company_owned'],
                 'service_schedule' => $validated['service_schedule'],
